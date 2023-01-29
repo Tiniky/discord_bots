@@ -34,14 +34,14 @@ def handle_response(msg) -> str:
             return "My final decision is: " + random.choice(messages_decide)
 
     if p_message[:9] == "decision" or p_message[:3] == "da" or p_message[:3] == "dr" or p_message[:3] == "dv" or p_message[:4] == "dea" or p_message[:4] == "dec" or p_message[:4] == "ded":
-        messages_decision = p_message.split("")
+        messages_decision = p_message.split(' ')
         if messages_decision[0] == "decisionview" or messages_decision[0] == "dv":
             if username not in usernames:
-                return "You have 0 saved decisions. Use '?decision'to learn more about those commands."
+                return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
             elif username in usernames:
                 for i in range(len(users)):
                     if users[i]["username"] == username and len(users[i]["decisions"] == 0):
-                        return "You have 0 saved decisions. Use '?decision'to learn more about those commands."
+                        return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
                     elif users[i]["username"] == username and len(users[i]["decisions"] == 1):
                         return "Your saved decision: " + ' '.join(map(str, users[i]["decisions"]))
                     else:
