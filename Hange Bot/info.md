@@ -7,15 +7,20 @@ does:
 - roll/r: random number between 1-1000
 - roll x y/r x y: random number between x-y
 - decide x or y or .../ d x or y or ...: pick one decision
+- ?decisionrename: explains how the 'decisionrename' command works
 - ?decisionadd: explains how the 'decisionadd' command works
 - ?decisionedit: explains how the 'decisionedit' commands (add,edit,delete) work
 - ?decisionremove: explains how the 'decisionremove' command works
 - ?decisionview: explains how the 'decisionview' command works
-- decisionview/dv: overview of added decision
+
+#in progress
+- decisionview/dv: overview of added decisions
+- decisionview name/dv name: view options of that decision
+- decisionadd/da name x or y or ...: save frequent decisions
+- decisionrename/dre old new: rename frequent decision
+- decisionremove/dr name: delete frequent decisions
 
 could do:
-- save frequent decisions
 - edit frequent decisions
-- delete frequent decisions
 - decide @xy frequent decision: más mentett decisionjét kipörgetni
 - példa mentett decisionre: Beat Saber map és diff roll
