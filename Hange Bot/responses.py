@@ -33,22 +33,7 @@ def handle_response(msg) -> str:
         else:
             return "My final decision is: " + random.choice(messages_decide)
 
-    if p_message[:9] == "decision" or p_message[:3] == "da" or p_message[:3] == "dr" or p_message[:3] == "dv" or p_message[:4] == "dea" or p_message[:4] == "dec" or p_message[:4] == "ded":
-        messages_decision = p_message.split(' ')
-        if messages_decision[0] == "decisionview" or messages_decision[0] == "dv":
-            if username not in usernames:
-                return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
-            elif username in usernames:
-                for i in range(len(users)):
-                    if users[i]["username"] == username and len(users[i]["decisions"] == 0):
-                        return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
-                    elif users[i]["username"] == username and len(users[i]["decisions"] == 1):
-                        return "Your saved decision: " + ' '.join(map(str, users[i]["decisions"]))
-                    else:
-                        if messages_decision[1] in users[i]["decisions"]:
-                            for j in range(len(users[i]["decisions"])):
-                                if users[i]["decisions"][j] == messages_decision[1]:
-                                    return "The options for the decision are: " + users[i]["options"][j][1].join(" or " + e for e in users[i]["options"][j][1:])
+    #decisions in progress
 
     if p_message[0] == '!' and p_message != "!help":
         return "Uhm.. I might not be the best person to ask for that. But if you need a quick decision hit me up!"
@@ -66,6 +51,8 @@ def handle_response(msg) -> str:
         return "I can remember frequent decisions. You can access them by 'decide decision_name'. Use '?decisionadd'/'?decisionedit'/'?decisionremove'/'?decisionview' if you want to know more about them."
     elif p_message == "?decisionadd":
         return "Use 'decisionadd(/da) name x or y or ...' and I'm gonna remember this decision."
+    elif p_message == "?decisionrename":
+        return "Use 'decisionrename(/dre) old_name new_name' to rename a decision."
     elif p_message == "?decisionedit":
         return "Use 'decisioneditadd(/dea) name x or ...' to add more options.  Use 'decisioneditchange(/dec) name option_before option_after' to change a saved option. Use 'decisioneditdelete(/ded) name option' to delete a saved option."
     elif p_message == "?decisionremove":
