@@ -33,6 +33,102 @@ def handle_response(msg) -> str:
         else:
             return "My final decision is: " + random.choice(messages_decide)
 
+    messages_decisions = p_message.split()
+    if messages_decisions[0] == "decisionadd" or messages_decisions[0] == "da":
+        options = " ".join(messages_decisions[2:]).split(" or ")
+        if len(messages_decisions) >= 3:
+            if username not in usernames:
+                decisions = []
+                decisions.append(messages_decisions[1])
+
+                alloptions = []
+                alloptions.append(options)
+
+                users.append({
+                    "username": username,
+                        "decisions": decisions,
+                        "options": alloptions
+                })
+            else:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if messages_decisions[1] in users[i]["decisions"]:
+                           return "You already have a decision saved with that name. You can either edit it or give this another name."
+                        else:
+                            users[i]["decisions"].append(messages_decisions[1])
+                            users[i]["options"].append(options)
+            
+            with open('hange_users.json', 'w') as ff:
+                json.dump(users, ff, indent=4, separators=(',', ': '))
+            return "I'm gonna remember this one."
+        else:
+            return "Not enough parameters! Use '?decisions' to learn more about them."
+
+    if messages_decisions[0] == "decisionview" or messages_decisions[0] == "dv":
+        if username not in usernames:
+            return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
+        elif username in usernames:
+            for i in range(len(users)):
+                if users[i]["username"] == username:
+                    if len(users[i]["decisions"]) == 0:
+                        return "You have 0 saved decisions. Use '?decision' to learn more about those commands."
+                    elif len(messages_decisions) == 1:
+                        return "Your saved decision(s): " + ' '.join(users[i]["decisions"])
+                    else:
+                        if messages_decisions[1] in users[i]["decisions"]:
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] == messages_decisions[1]:
+                                    return "The options for the decision are: " + " or ".join(users[i]["options"][j])
+                        else:
+                            return "You don't have saved decision with that name. Use 'decisionview' or 'dv' to look at all your saved decisions."
+
+    if messages_decisions[0] == "decisionrename" or messages_decisions[0] == "dre":
+        if len(messages_decisions) == 3:
+            old_name = messages_decisions[1]
+            new_name = messages_decisions[2]
+            if username not in usernames:
+                return "You don't have any saved decisions. Use '?decision' to learn more about those commands."
+            elif username in usernames:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if old_name not in users[i]["decisions"]:
+                            return "You don't have a saved decision with that name. Use 'decisionview' or 'dv' to look at your saved decisions."
+                        else:
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] == old_name:
+                                    users[i]["decisions"][j] = new_name
+                            
+                            with open('hange_users.json', 'w') as ff:
+                                json.dump(users, ff, indent=4, separators=(',', ': '))
+            return "Change noted."
+        else:
+            return "Wrong parameters! Use '?decisions' to learn more about them."
+
+    if messages_decisions[0] == "decisionremove" or messages_decisions[0] == "dr":
+        if len(messages_decisions) == 2:
+            if username not in usernames:
+                return "You don't have any saved decisions. Use '?decision' to learn more about those commands."
+            elif username in usernames:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if messages_decisions[1] not in users[i]["decisions"]:
+                            return "You don't have a saved decision with that name. Use 'decisionview' or 'dv' to look at your saved decisions."
+                        else:
+                            decisions_new = []
+                            options_new = []
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] != messages_decisions[1]:
+                                    decisions_new.append(users[i]["decisions"][j])
+                                    options_new.append(users[i]["options"][j])
+                            
+                            users[i]["decisions"] = decisions_new
+                            users[i]["options"] = options_new
+                            with open('hange_users.json', 'w') as ff:
+                                json.dump(users, ff, indent=4, separators=(',', ': '))
+                            return "Okay, let's forget it."
+        else:
+            return "Wrong parameters! Use '?decisions' to learn more about them."
+        
     #decisions in progress
 
     if p_message[0] == '!' and p_message != "!help":
