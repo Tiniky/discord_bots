@@ -12,8 +12,6 @@ does:
 - ?decisionedit: explains how the 'decisionedit' commands (add,edit,delete) work
 - ?decisionremove: explains how the 'decisionremove' command works
 - ?decisionview: explains how the 'decisionview' command works
-
-#in progress
 - decisionview/dv: overview of added decisions
 - decisionview name/dv name: view options of that decision
 - decisionadd/da name x or y or ...: save frequent decisions
@@ -24,3 +22,4 @@ could do:
 - edit frequent decisions
 - decide @xy frequent decision: más mentett decisionjét kipörgetni
 - példa mentett decisionre: Beat Saber map és diff roll
+- decision repetition
