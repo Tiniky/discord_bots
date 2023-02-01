@@ -17,6 +17,7 @@ does:
 - decisionadd/da name x or y or ...: save frequent decisions
 - decisionrename/dre old new: rename frequent decision
 - decisionremove/dr name: delete frequent decisions
+- decide saved_decision_name/d saved_decision_name: pick an option from a saved decision
 
 could do:
 - edit frequent decisions
