@@ -18,9 +18,11 @@ does:
 - decisionrename/dre old new: rename frequent decision
 - decisionremove/dr name: delete frequent decisions
 - decide saved_decision_name/d saved_decision_name: pick an option from a saved decision
+- decisioneditadd name x or .../dea name x or ...: adds another option to a saved decision
+- decisioneditchange name old new/dec name old new: changes an option of a saved decision
+- decisioneditdelete name option/ded name option: deletes an option of a saved decision
 
 could do:
-- edit frequent decisions
 - decide @xy frequent decision: más mentett decisionjét kipörgetni
 - példa mentett decisionre: Beat Saber map és diff roll
 - decision repetition
