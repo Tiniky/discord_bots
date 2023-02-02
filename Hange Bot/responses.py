@@ -139,6 +139,83 @@ def handle_response(msg, username) -> str:
                             return "Okay, let's forget it."
         else:
             return "Wrong parameters! Use '?decisions' to learn more about them."
+     
+    if message_split[0] == "decisioneditadd" or message_split[0] == "dea":
+        if len(message_split) >= 3:
+            options = " ".join(message_split[2:]).split(" or ")
+            if username not in usernames:
+                return "You don't have any saved decisions. Use '?decision' to learn more about those commands."
+            else:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if message_split[1] not in users[i]["decisions"]:
+                            return "You don't have a saved decision with that name. Use 'decisionview' or 'dv' to look at your saved decisions."
+                        else:
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] == message_split[1]:
+                                    for k in range(len(options)):
+                                        users[i]["options"][j].append(options[k])
+
+                            with open('hange_users.json', 'w') as ff:
+                                json.dump(users, ff, indent=4, separators=(',', ': '))
+                            return "Okay, changes noted."
+        else:
+            return "Not enough parameters! Use '?decisions' to learn more about them."
+
+    if message_split[0] == "decisioneditchange" or message_split[0] == "dec":
+        options = " ".join(message_split[2:]).split(" to ")
+        if len(message_split) >= 5 and len(options) == 2:
+            if username not in usernames:
+                return "You don't have any saved decisions. Use '?decision' to learn more about those commands."
+            else:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if message_split[1] not in users[i]["decisions"]:
+                            return "You don't have a saved decision with that name. Use 'decisionview' or 'dv' to look at your saved decisions."
+                        else:
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] == message_split[1]:
+                                    if options[0] not in users[i]["options"][j]:
+                                        return "You don't have a saved option like that. Use 'decisionview' or 'dv' to look at your saved decisions."
+                                    else:
+                                        for k in range(len(users[i]["options"][j])):
+                                            if users[i]["options"][j][k] == options[0]:
+                                                users[i]["options"][j][k] = options[1]
+
+                            with open('hange_users.json', 'w') as ff:
+                                json.dump(users, ff, indent=4, separators=(',', ': '))
+                            return "Okay, changes noted."
+        else:
+            return "Not enough parameters! Use '?decisions' to learn more about them."
+
+    if message_split[0] == "decisioneditdelete" or message_split[0] == "ded":
+        option = message_split[2:]
+        print(option)
+        if len(message_split) >= 3:
+            if username not in usernames:
+                return "You don't have any saved decisions. Use '?decision' to learn more about those commands."
+            else:
+                for i in range(len(users)):
+                    if users[i]["username"] == username:
+                        if message_split[1] not in users[i]["decisions"]:
+                            return "You don't have a saved decision with that name. Use 'decisionview' or 'dv' to look at your saved decisions."
+                        else:
+                            for j in range(len(users[i]["decisions"])):
+                                if users[i]["decisions"][j] == message_split[1]:
+                                    if option[0] not in users[i]["options"][j]:
+                                        return "You don't have a saved option like that. Use 'decisionview' or 'dv' to look at your saved decisions."
+                                    else:
+                                        options_new = []
+                                        for k in range(len(users[i]["options"][j])):
+                                            if users[i]["options"][j][k] != option[0]:
+                                                options_new.append(users[i]["options"][j][k])
+                                    users[i]["options"][j] = options_new
+
+                            with open('hange_users.json', 'w') as ff:
+                                json.dump(users, ff, indent=4, separators=(',', ': '))
+                            return "Okay, changes noted."
+        else:
+            return "Not enough parameters! Use '?decisions' to learn more about them."
 
     if p_message[0] == '!' and p_message != "!help":
         return "Uhm.. I might not be the best person to ask for that. But if you need a quick decision hit me up!"
