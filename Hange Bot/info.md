@@ -21,8 +21,6 @@ does:
 - decisioneditadd name x or .../dea name x or ...: adds another option to a saved decision
 - decisioneditchange name old new/dec name old new: changes an option of a saved decision
 - decisioneditdelete name option/ded name option: deletes an option of a saved decision
-
-could do:
-- decide @xy frequent decision: más mentett decisionjét kipörgetni
-- példa mentett decisionre: Beat Saber map és diff roll
-- decision repetition
+- decide!num .../ d!num: repeats making the decision
+- decide name#xxxx decision: rolls another user's saved decision
+- decisionview name#xxxx: overview of users added decisions
