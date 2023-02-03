@@ -1,9 +1,9 @@
 import discord
 import responses
 
-async def send_message(message, user_message, is_private, author):
+async def send_message(message, user_message, is_private, author, permission):
     try:
-        response = responses.handle_response(user_message, author)
+        response = responses.handle_response(user_message, author, permission)
         await message.author.send(response) if is_private else await message.channel.send(response)
     except Exception as e:
         print(e)
@@ -32,8 +32,20 @@ def run_discord_bot():
 
         if user_message[0] == '>':
             user_message = user_message[1:]
-            await send_message(message, user_message, is_private=True, author=username)
+            if "#" not in user_message:
+                await send_message(message, user_message, is_private=True, author=username, permission="YES")
+            else:
+                messages_split = user_message.split()
+                username2 = messages_split[1]
+                user_message2 = ' '.join([messages_split[0], *messages_split[2:]])
+                await send_message(message, user_message2, is_private=True, author=username2, permission="NO")
         else:
-            await send_message(message, user_message, is_private=False, author=username)
+            if "#" not in user_message:
+                await send_message(message, user_message, is_private=False, author=username, permission="YES")
+            else:
+                messages_split = user_message.split()
+                username2 = messages_split[1]
+                user_message2 = ' '.join([messages_split[0], *messages_split[2:]])
+                await send_message(message, user_message2, is_private=False, author=username2, permission="NO")
 
     client.run(TOKEN)
